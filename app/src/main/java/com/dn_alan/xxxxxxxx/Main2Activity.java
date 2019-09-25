@@ -1,20 +1,23 @@
 package com.dn_alan.xxxxxxxx;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import com.dn_alan.xxxxxxxx.bean.Person;
+import com.dn_alan.xxxxxxxx.dagger.DaggerActivityComponent;
+
+import javax.inject.Inject;
 
 public class Main2Activity extends AppCompatActivity {
+
+    /**
+     * 普通注入演示**
+     *
+     */
+    @Inject
+    Person person;
 
     private View v;
 
@@ -23,11 +26,14 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        DaggerActivityComponent.create().inject(this);
         v = findViewById(R.id.button);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Main2Activity.this, "别点啦，再点我咬你了...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Main2Activity.this, "Love " + person.name, Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
